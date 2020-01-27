@@ -1,10 +1,11 @@
 const fs = require('fs');
 
-// FIRST METHOD
+// 1. What floor does Santa end up on
+// FIRST METHOD: 7.287ms
 console.time('first')
-const data = fs.readFileSync('./santahelperinput', 'utf-8');
-const down = data.split('').filter(ch => ch === ')').length;
-const up = data.split('').filter(ch => ch === '(').length;
+const dataRaw = fs.readFileSync('./santahelperinput', 'utf-8');
+const down = dataRaw.split('').filter(ch => ch === ')').length;
+const up = dataRaw.split('').filter(ch => ch === '(').length;
 
 const floorNumber = () => {
   if (down > up) {
@@ -18,20 +19,42 @@ const floorNumber = () => {
 console.log(floorNumber())
 console.timeEnd('first')
 
-// SECOND METHOD
+
+// Looping method for next approaches
+const arrayLoop = () => {
+  if(dataArray[i] === '(') {
+    num = num + 1;
+  } else if(dataArray[i] === ')') {
+    num = num - 1;
+  }
+}
+
+// SECOND METHOD: 1.065ms
 console.time('second')
-const data2 = fs.readFileSync('./santahelperinput', 'utf-8').split('');
+const dataArray = fs.readFileSync('./santahelperinput', 'utf-8').split('');
 const floorNumber2 = () => {
   num = 1;
-  for(i=0; i <=data2.length; i++) {
-    if(data2[i] === '(') {
-      num = num + 1;
-    } else {
-      num = num -1;
-    }
+  for(i=0; i <= dataArray.length; i++) {
+    arrayLoop()
   }
   console.log(num)
 }
 
 floorNumber2();
 console.timeEnd('second');
+
+//2. When does Santa first enter the basement
+// FINDING the basement: 0.525ms
+console.time('position');
+const findBasement = () => {
+  num = 1;
+    for (i=0; i <= dataArray.length; i++) {
+      if (num > 0) {
+        arrayLoop()
+      } else {
+        return i;
+      }
+  }
+}
+console.log(findBasement());
+console.timeEnd('position');
